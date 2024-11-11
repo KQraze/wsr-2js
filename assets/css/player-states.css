@@ -1,0 +1,74 @@
+.player {
+    position: absolute;
+}
+
+.player.mario {
+    background: url("../img/mario/mario-stay.png") no-repeat;
+    background-size: contain;
+}
+
+.player.mario._go-right {
+    animation: mario-goes .3s infinite;
+}
+
+.player.mario._go-left {
+    animation: mario-goes .3s infinite;
+    transform: scaleX(-1);
+}
+
+.player.mario._jumped {
+    animation: none !important;
+    background: url("../img/mario/mario-jump.png");
+    background-size: contain;
+}
+
+
+@keyframes mario-goes {
+    0% {
+        background: url("../img/mario/mario-go.png") no-repeat center;
+        background-size: contain;
+    }
+    50% {
+        background: url("../img/mario/mario-stay-side.png") no-repeat center;
+        background-size: contain;
+    }
+    100% {
+        background: url("../img/mario/mario-go.png") no-repeat center;
+        background-size: contain;
+    }
+}
+
+.player.luigi {
+    background: url("../img/luigi/luigi-stay.png") no-repeat;
+    background-size: contain;
+}
+
+.player.luigi._go-right {
+    animation: luigi-goes .3s infinite;
+}
+
+.player.luigi._go-left {
+    animation: luigi-goes .3s infinite;
+    transform: scaleX(-1);
+}
+
+.player.luigi._jumped {
+    animation: none !important;
+    background: url("../img/luigi/luigi-jump.png") no-repeat;
+    background-size: contain;
+}
+
+@keyframes luigi-goes {
+    0% {
+        background: url("../img/luigi/luigi-go.png") no-repeat center;
+        background-size: contain;
+    }
+    50% {
+        background: url("../img/luigi/luigi-stay-side.png") no-repeat center;
+        background-size: contain;
+    }
+    100% {
+        background: url("../img/luigi/luigi-go.png") no-repeat center;
+        background-size: contain;
+    }
+}

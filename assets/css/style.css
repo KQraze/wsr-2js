@@ -1,0 +1,96 @@
+@import "fonts/fonts.css";
+@import "player-states.css";
+:root {
+    --base-font: "foo";
+    --game-font: 'Pr Startk';
+}
+
+html {
+    --accent-color: #ff403f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-image: url("../img/background.jpeg");
+    background-size: contain;
+    font-family: var(--base-font), sans-serif;
+    display: grid;
+    grid-template-rows: 1fr;
+}
+
+.base-font {
+    font-family: var(--base-font), sans-serif;
+}
+
+
+.game-font {
+    font-family: var(--game-font), sans-serif;
+}
+
+.grid-auto-1fr-auto {
+    grid-template-rows: auto 1fr auto;
+}
+
+.grid-1fr-1fr {
+    grid-template-columns: 1fr 1fr;
+}
+
+.form-control:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(47, 255, 0, 0.25);
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.card-image {
+    width: 100%;
+    min-height: 300px;
+}
+
+.card-image.mario {
+    background: url("../img/mario/mario-stay.png") no-repeat center;
+    background-size: contain;
+}
+
+.card-image.mario:hover {
+    animation: mario-goes .4s infinite;
+}
+
+.card-image.luigi {
+    background: url("../img/luigi/luigi-stay.png") no-repeat center;
+    background-size: contain;
+}
+
+.card-image.luigi:hover {
+    animation: luigi-goes .4s infinite;
+}
+
+#select-luigi.card_selected {
+    filter: drop-shadow(0 0 30px #6eff3c);
+}
+
+#select-mario.card_selected {
+    filter: drop-shadow(0 0 30px #ff0200);
+}
+
+.element {
+    position: absolute;
+}
+
+.element.brick {
+    background: url("../img/block.png");
+    background-size: contain;
+}
+
+.footer {
+    height: 140px;
+}

@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'foo';
+    src: url("./foo.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Mario and Luigi';
+    src: url('./mario-and-luigi.ttf');
+}
+
+@font-face {
+    font-family: 'Pipe Dream';
+    src: url('./pipe-dream.ttf');
+}
+
+@font-face {
+    font-family: 'Pr Start';
+    src: url("./prstart.ttf");
+}
+
+@font-face {
+    font-family: 'Pr Startk';
+    src: url("./prstartk.ttf");
+}
+
+@font-face {
+    font-family: 'Super Plumber Brothers';
+    src: url("./super-plumber-brothers.ttf");
+}
+
+@font-face {
+    font-family: 'Super Mario 256';
+    src: url("./SuperMario256.ttf");
+}
+
+
+@font-face {
+    font-family: 'tlpsmb';
+    src: url("./tlpsmb.ttf");
+}
