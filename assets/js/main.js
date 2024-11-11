@@ -1,7 +1,7 @@
 let game = {};
 
 const gameConfig = {
-    BOTTOM_POINT: innerHeight - 160,
+    BOTTOM_POINT: innerHeight - 140,
     SPEED_COEFFICIENT: 60 / getFps()
 }
 
@@ -12,6 +12,7 @@ const currentUser = {
 let currentView = 'start';
 
 const $ = (selector) => document.querySelector(selector);
+const $all = (selector) => document.querySelectorAll(selector);
 
 const go = (page) => {
     const views = ['start', 'game', 'end'];
@@ -42,7 +43,13 @@ function getFps() {
     const fps = localStorage.getItem('fps') ?? +prompt('Введите частоту кадров вашего монитора', '60')
     localStorage.setItem('fps', fps);
     return fps;
+}
 
+function getRandom(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+
+    return Math.floor(Math.random()*(max-min+1)) + min
 }
 
 $('#nameInput').oninput = (e) => {

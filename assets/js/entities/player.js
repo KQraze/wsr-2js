@@ -1,14 +1,12 @@
-class Player extends Drawable {
+class Player extends MovingEntities {
     constructor(game) {
         super(game);
         this.h = 120;
         this.w = this.h * 0.7;
-        this.x = 700;
-        // this.y = gameConfig.BOTTOM_POINT - 200;
-        this.y = 0;
+        this.x = 100;
+        this.y = gameConfig.BOTTOM_POINT - 200;
         this.jumpHeight = 200;
         this.targetY = null;
-        this.speedPerFrame = Math.floor(12 * gameConfig.SPEED_COEFFICIENT);
         this.inJump = false;
         this.inFall = false;
         this.keys = {
@@ -30,9 +28,7 @@ class Player extends Drawable {
 
     onFalling() {
         if (this.inJump) return;
-        if (
-            this.isCollision($('#footer')).isBottom || this.isCollision($('.element.brick')).isBottom
-        ) {
+        if (this.collisions.isBottom()) {
             this.inFall = false;
             this.offsets.y = 0;
             this.element.classList.remove('_jumped')
@@ -48,7 +44,7 @@ class Player extends Drawable {
 
             if (
                 this.targetY && (this.targetY + 10 >= this.y) ||
-                this.isCollision($('.element.brick')).isTop
+                this.collisions.isTop()
             ) {
                 this.targetY = null;
                 this.inJump = false;
@@ -66,7 +62,7 @@ class Player extends Drawable {
     onArrowLeft() {
         this.element.classList.add('_go-left');
         this.offsets.x = -(this.speedPerFrame);
-        if (this.x < 0 || this.isCollision($('.element.brick')).isLeft) {
+        if (this.x < 0 || this.collisions.isLeft()) {
             this.offsets.x = 0;
         }
     }
@@ -79,7 +75,7 @@ class Player extends Drawable {
     onArrowRight() {
         this.element.classList.add('_go-right');
         this.offsets.x = this.speedPerFrame;
-        if (this.isCollision($('.element.brick')).isRight) {
+        if (this.collisions.isRight()) {
             this.offsets.x = 0;
         }
     }
