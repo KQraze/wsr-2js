@@ -6,7 +6,7 @@ class Environment extends Drawable {
 
     update(freezeX = false, freezeY = true) {
         if (!freezeY) this.y += this.offsets.y;
-        if (!freezeX) this.x += -this.offsets.x;
+        if (!freezeX && this.game.player.isFreeze.x) this.x += -this.offsets.x;
     }
 }
 
@@ -17,7 +17,6 @@ class Background extends Environment {
 
     update(freezeX = false, freezeY = false) {
         $('body').style.backgroundPositionX = `${this.x}px`
-
         super.update(freezeX, freezeY)
     }
 

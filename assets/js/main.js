@@ -1,7 +1,7 @@
 let game = {};
 
 const gameConfig = {
-    BOTTOM_POINT: innerHeight - 140,
+    BOTTOM_POINT: innerHeight - 120,
     SPEED_COEFFICIENT: 60 / getFps()
 }
 

@@ -1,4 +1,4 @@
-class MovingEntities extends Drawable {
+class MovingEntity extends Drawable {
     constructor(game) {
         super(game);
         this.speedPerFrame = Math.floor(12 * gameConfig.SPEED_COEFFICIENT);
@@ -11,6 +11,10 @@ class MovingEntities extends Drawable {
             isLeft: () => this.collisions.left.some((collision) => collision().isLeft),
             isRight: () => this.collisions.right.some((collision) => collision().isRight),
             isTop: () => this.collisions.top.some((collision) => collision().isTop),
+        }
+        this.isFreeze = {
+            x: false,
+            y: false
         }
     }
 

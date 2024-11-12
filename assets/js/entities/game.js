@@ -22,7 +22,7 @@ class Game {
         for (let i = 0; i < count; i++) {
             this.generate(Brick, {
                 x: getRandom(400, 10000),
-                y: getRandom(gameConfig.BOTTOM_POINT, gameConfig.BOTTOM_POINT - 400)
+                y: getRandom(gameConfig.BOTTOM_POINT - 70, gameConfig.BOTTOM_POINT - 400)
             })
         }
 

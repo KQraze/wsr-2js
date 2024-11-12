@@ -1,4 +1,4 @@
-class Player extends MovingEntities {
+class Player extends MovingEntity {
     constructor(game) {
         super(game);
         this.h = 120;
@@ -96,22 +96,22 @@ class Player extends MovingEntities {
         this.onFalling();
 
         if (this.keys.ArrowUp) this.onArrowUp();
-        if (this.x > innerWidth / 3) freezeX = true;
+        if (this.x > innerWidth / 3) this.isFreeze.x = true;
         if (this.keys.ArrowLeft) {
             this.onArrowLeft()
 
-            return super.update(freezeX);
+            return super.update(this.isFreeze.x, this.isFreeze.y);
         }
         else this.unArrowLeft();
 
         if (this.keys.ArrowRight) {
             this.onArrowRight()
 
-            return super.update(freezeX);
+            return super.update(this.isFreeze.x, this.isFreeze.y);
         }
         else this.unArrowRight();
 
-        return super.update(freezeX, freezeY);
+        return super.update(this.isFreeze.x, this.isFreeze.y);
     }
 }
 
