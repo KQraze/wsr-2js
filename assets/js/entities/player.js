@@ -5,7 +5,7 @@ class Player extends MovingEntity {
         this.w = this.h * 0.7;
         this.x = 100;
         this.y = gameConfig.BOTTOM_POINT - 200;
-        this.jumpHeight = 200;
+        this.jumpHeight = 250;
         this.targetY = null;
         this.inJump = false;
         this.inFall = false;
@@ -26,16 +26,26 @@ class Player extends MovingEntity {
         if (code in this.keys) this.keys[code] = value;
     }
 
+    resetFall() {
+        this.inFall = false;
+        this.offsets.y = 0;
+        this.element.classList.remove('_jumped')
+    }
+
     onFalling() {
         if (this.inJump) return;
         if (this.collisions.isBottom()) {
-            this.inFall = false;
-            this.offsets.y = 0;
-            this.element.classList.remove('_jumped')
+            this.resetFall()
         } else {
             this.inFall = true;
-            this.offsets.y = this.speedPerFrame  * 2;
+            const progress = Math.abs((this.y - gameConfig.BOTTOM_POINT) / gameConfig.BOTTOM_POINT);
+            this.offsets.y = Math.abs(this.speedPerFrame * 2 * progress * 3);
         }
+    }
+
+    resetJump() {
+        this.targetY = null;
+        this.inJump = false;
     }
 
     onJump() {
@@ -46,14 +56,13 @@ class Player extends MovingEntity {
                 this.targetY && (this.targetY + 10 >= this.y) ||
                 this.collisions.isTop()
             ) {
-                this.targetY = null;
-                this.inJump = false;
+                this.resetJump()
                 return;
             }
             if (!this.targetY) this.targetY = this.y - this.jumpHeight;
 
             const progress = Math.abs((this.targetY - this.y) / this.jumpHeight);
-            this.offsets.y = progress < 0.05 ? -Math.abs(this.speedPerFrame * 2 * progress) : -this.speedPerFrame;
+            this.offsets.y = -Math.abs(this.speedPerFrame * 2 * progress * 2);
 
             this.onJump();
         })
@@ -61,7 +70,7 @@ class Player extends MovingEntity {
 
     onArrowLeft() {
         this.element.classList.add('_go-left');
-        this.offsets.x = -(this.speedPerFrame);
+        this.offsets.x = -this.speedPerFrame;
         if (this.x < 0 || this.collisions.isLeft()) {
             this.offsets.x = 0;
         }
@@ -94,6 +103,31 @@ class Player extends MovingEntity {
 
     update(freezeX = false, freezeY = false) {
         this.onFalling();
+
+        this.collisions.isInside((collisionElement) => {
+            if (!collisionElement) return;
+
+            if (this.inFall) {
+                this.resetFall();
+                this.y = collisionElement().top + 5
+
+                return;
+            }
+
+            if (this.inJump) {
+                this.y = collisionElement().bottom + this.h;
+                this.resetJump();
+                console.debug({
+                    type: 'after',
+                    inJump: this.inJump,
+                    inFall: this.inFall,
+                    playerY: this.y,
+                    collisionElement: collisionElement()
+                })
+            }
+
+            //todo if (!this.inJump && !this.inFall)
+        })
 
         if (this.keys.ArrowUp) this.onArrowUp();
         if (this.x > innerWidth / 3) this.isFreeze.x = true;
