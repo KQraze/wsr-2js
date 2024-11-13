@@ -5,7 +5,7 @@ class Player extends MovingEntity {
         this.w = this.h * 0.7;
         this.x = 100;
         this.y = gameConfig.BOTTOM_POINT - 200;
-        this.jumpHeight = 250;
+        this.jumpHeight = 300;
         this.targetY = null;
         this.inJump = false;
         this.inFall = false;
@@ -52,10 +52,9 @@ class Player extends MovingEntity {
         requestAnimationFrame(() => {
             if (!this.inJump) return;
 
-            if (
-                this.targetY && (this.targetY + 10 >= this.y) ||
-                this.collisions.isTop()
-            ) {
+            let isTop = this.collisions.isTop((collisionElement) => {})
+
+            if (this.targetY && (this.targetY + 10 >= this.y) || isTop) {
                 this.resetJump()
                 return;
             }
@@ -71,7 +70,10 @@ class Player extends MovingEntity {
     onArrowLeft() {
         this.element.classList.add('_go-left');
         this.offsets.x = -this.speedPerFrame;
-        if (this.x < 0 || this.collisions.isLeft()) {
+
+        let isLeft = this.collisions.isLeft()
+
+        if (this.x < 0 || isLeft) {
             this.offsets.x = 0;
         }
     }
@@ -84,9 +86,10 @@ class Player extends MovingEntity {
     onArrowRight() {
         this.element.classList.add('_go-right');
         this.offsets.x = this.speedPerFrame;
-        if (this.collisions.isRight()) {
+
+        this.collisions.isRight(() => {
             this.offsets.x = 0;
-        }
+        })
     }
 
     unArrowRight() {
@@ -104,15 +107,17 @@ class Player extends MovingEntity {
     update(freezeX = false, freezeY = false) {
         this.onFalling();
 
-        this.collisions.isInside((collisionElement) => {
-            if (!collisionElement) return;
+        this.collisions.isInside((collisionEl) => {
+            if (!collisionEl) return;
 
+            const { top, bottom, COLLISION_STEP, element, selector } = collisionEl();
 
+            console.log(selector)
             if (this.offsets.y > 0) {
-                this.y = collisionElement().top - this.h;
+                this.y = top - this.h;
                 this.resetFall();
             } else {
-                this.y = collisionElement().bottom + collisionElement().COLLISION_STEP ;
+                this.y = bottom + COLLISION_STEP;
             }
         })
 

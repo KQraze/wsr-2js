@@ -31,12 +31,24 @@ class Background extends Environment {
 }
 
 class Brick extends Environment {
-    constructor(game, { x, y }) {
+    constructor(game, { x }) {
         super(game);
         this.x = x || 500;
-        this.y = y || gameConfig.BOTTOM_POINT - 230;
-        this.w = 400;
+        this.y = gameConfig.BOTTOM_POINT - 280;
+        this.w = 70;
         this.h = 70;
     }
 }
 
+class MushroomSpawner extends Brick {
+    constructor(game, { x }) {
+        super(game, { x });
+        this.spawned = false;
+
+    }
+
+    spawn() {
+        if (this.spawned) return;
+        this.element.classList.add('_spawned');
+    }
+}

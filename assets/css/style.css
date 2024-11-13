@@ -1,5 +1,6 @@
 @import "fonts/fonts.css";
 @import "player-states.css";
+@import "environment-states.css";
 :root {
     --base-font: "foo";
     --game-font: 'Pr Startk';
@@ -86,10 +87,6 @@ body {
     position: absolute;
 }
 
-.element.brick {
-    background: url("../img/block.png");
-    background-size: contain;
-}
 
 .footer {
     height: 145px;

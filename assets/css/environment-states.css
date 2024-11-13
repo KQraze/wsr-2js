@@ -1,0 +1,22 @@
+.element.brick {
+    background: url("../img/block.png");
+    background-size: contain;
+}
+
+.element.mushroomspawner {
+    background: url("../img/mushroom-spawner.png");
+    background-size: contain;
+}
+
+.element.mushroomspawner._spawned {
+    animation: spawn .3s ease-in-out;
+}
+
+@keyframes spawn {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10%);
+    }
+}

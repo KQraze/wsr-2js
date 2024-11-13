@@ -8,16 +8,37 @@ class MovingEntity extends Drawable {
             right: [],
             top: [],
             inside: [() => this.isCollision($('#footer'))],
-            isBottom: () => this.collisions.bottom.some((collision) => collision().isBottom),
-            isLeft: () => this.collisions.left.some((collision) => collision().isLeft),
-            isRight: () => this.collisions.right.some((collision) => collision().isRight),
-            isTop: () => this.collisions.top.some((collision) => collision().isTop),
-            isInside: (callbackFn) => callbackFn(this.collisions.inside.find((collision) => collision().isInside)),
+
+            isBottom: (callbackFn = () => undefined) => {
+                return this.isCollisionWithCallback('bottom', callbackFn)
+            },
+            isLeft: (callbackFn = () => undefined) => {
+                return this.isCollisionWithCallback('left', callbackFn)
+            },
+            isRight: (callbackFn = () => undefined) => {
+                return this.isCollisionWithCallback('right', callbackFn)
+            },
+            isTop: (callbackFn = () => undefined) => {
+                return this.isCollisionWithCallback('top', callbackFn)
+            },
+            isInside: (callbackFn = () => undefined) => {
+                return this.isCollisionWithCallback('inside', callbackFn)
+            },
         }
         this.isFreeze = {
             x: false,
             y: false
         }
+    }
+
+    isCollisionWithCallback(direction = 'bottom', callbackFn = () => undefined) {
+        let types = new Map([['bottom', 'isBottom'], ['top', 'isTop'], ['left', 'isLeft'], ['right', 'isRight'], ['inside', 'isInside']])
+
+        let elementCollision = this.collisions[direction].find((collision) => collision()[types.get(direction)]) ?? undefined;
+
+        if (elementCollision) callbackFn(elementCollision);
+
+        return elementCollision;
     }
 
     bindCollisions(selector) {
@@ -57,6 +78,7 @@ class MovingEntity extends Drawable {
 
         return {
             COLLISION_STEP,
+            selector: element.classList.value.split(' ').map((item) => '.' + item).join(''),
             isLeft,
             isRight,
             isTop,
