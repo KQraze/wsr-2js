@@ -1,4 +1,4 @@
-class Environment extends Drawable {
+class Environment extends CollisionEntity {
     constructor(game) {
         super(game);
         this.offsets = game.player.offsets;
@@ -44,11 +44,23 @@ class MushroomSpawner extends Brick {
     constructor(game, { x }) {
         super(game, { x });
         this.spawned = false;
-
+        this.bindCollisions('.player')
     }
 
     spawn() {
         if (this.spawned) return;
+        this.spawned = true;
+        this.game.generate(Mushroom, { x: this.x, y: this.y })
         this.element.classList.add('_spawned');
+    }
+
+    update(freezeX = false, freezeY = true) {
+        this.collisions.isBottom((collisionElem) => {
+            if (collisionElem().classList.some((className) => ['player'].includes(className))) {
+                this.spawn()
+            }
+        })
+
+        super.update(freezeX, freezeY);
     }
 }

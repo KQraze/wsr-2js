@@ -1,4 +1,4 @@
-class MovingEntity extends Drawable {
+class CollisionEntity extends Drawable {
     constructor(game) {
         super(game);
         this.speedPerFrame = Math.floor(12 * gameConfig.SPEED_COEFFICIENT);
@@ -73,12 +73,13 @@ class MovingEntity extends Drawable {
             return (elem1.left - elem2.right) * (elem2.left - elem1.right) > 0
         }
         function intersectionY() {
-            return (elem1.top - elem2.bottom) * (elem2.top - elem1.bottom) > 0
+            return (elem1.top - elem2.bottom - COLLISION_STEP) * (elem2.top - elem1.bottom + COLLISION_STEP) > 0
         }
 
         return {
             COLLISION_STEP,
             selector: element.classList.value.split(' ').map((item) => '.' + item).join(''),
+            classList: element.classList.value.split(' '),
             isLeft,
             isRight,
             isTop,

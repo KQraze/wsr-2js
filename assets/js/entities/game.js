@@ -4,6 +4,7 @@ class Game {
         this.elements = [];
         this.player = this.generate(this.user.character === 'mario' ? Mario : Luigi);
         this.generateBricks(15);
+        this.generateSpawners(15)
         this.background = this.generate(Background);
     }
 
@@ -18,11 +19,20 @@ class Game {
         })
     }
 
+    generateSpawners(count) {
+        for (let i = 0; i < count; i++) {
+            this.generate(MushroomSpawner, {
+                x: getRandom(400, 10000),
+            })
+        }
+
+        this.player.bindCollisions('.element.mushroomspawner');
+    }
+
     generateBricks(count) {
         for (let i = 0; i < count; i++) {
             this.generate(Brick, {
                 x: getRandom(400, 10000),
-                y: getRandom(gameConfig.BOTTOM_POINT - 70, gameConfig.BOTTOM_POINT - 400)
             })
         }
 

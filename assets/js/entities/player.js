@@ -1,4 +1,4 @@
-class Player extends MovingEntity {
+class Player extends CollisionEntity {
     constructor(game) {
         super(game);
         this.h = 120;
@@ -52,7 +52,7 @@ class Player extends MovingEntity {
         requestAnimationFrame(() => {
             if (!this.inJump) return;
 
-            let isTop = this.collisions.isTop((collisionElement) => {})
+            let isTop = this.collisions.isTop()
 
             if (this.targetY && (this.targetY + 10 >= this.y) || isTop) {
                 this.resetJump()
