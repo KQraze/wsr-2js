@@ -45,6 +45,15 @@ class Game {
         return element;
     }
 
+    removeElement(el) {
+        let index = this.elements.indexOf(el);
+        if (index !== -1) {
+            this.elements.splice(index, 1);
+            return true;
+        }
+        return false;
+    }
+
     updateElements() {
         this.elements.forEach((element) => {
             element.update();

@@ -22,6 +22,12 @@ class Drawable {
         this.element.className = className;
     }
 
+    removeElement() {
+        if(this.game.removeElement(this)) {
+            this.element.remove();
+        }
+    }
+
 
     draw() {
         this.element.style = `

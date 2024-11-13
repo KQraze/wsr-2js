@@ -108,8 +108,6 @@ class Player extends CollisionEntity {
         this.onFalling();
 
         this.collisions.isInside((collisionEl) => {
-            if (!collisionEl) return;
-
             const { top, bottom, COLLISION_STEP, element, selector } = collisionEl();
 
             console.log(selector)
