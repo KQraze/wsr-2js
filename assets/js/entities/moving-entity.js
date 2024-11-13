@@ -56,6 +56,7 @@ class MovingEntity extends Drawable {
         }
 
         return {
+            COLLISION_STEP,
             isLeft,
             isRight,
             isTop,

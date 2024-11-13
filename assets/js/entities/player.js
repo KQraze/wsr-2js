@@ -107,26 +107,13 @@ class Player extends MovingEntity {
         this.collisions.isInside((collisionElement) => {
             if (!collisionElement) return;
 
-            if (this.inFall) {
+
+            if (this.offsets.y > 0) {
+                this.y = collisionElement().top - this.h;
                 this.resetFall();
-                this.y = collisionElement().top + 5
-
-                return;
+            } else {
+                this.y = collisionElement().bottom + collisionElement().COLLISION_STEP ;
             }
-
-            if (this.inJump) {
-                this.y = collisionElement().bottom + this.h;
-                this.resetJump();
-                console.debug({
-                    type: 'after',
-                    inJump: this.inJump,
-                    inFall: this.inFall,
-                    playerY: this.y,
-                    collisionElement: collisionElement()
-                })
-            }
-
-            //todo if (!this.inJump && !this.inFall)
         })
 
         if (this.keys.ArrowUp) this.onArrowUp();
