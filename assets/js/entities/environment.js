@@ -6,7 +6,7 @@ class Environment extends CollisionEntity {
 
     update(freezeX = false, freezeY = true) {
         if (!freezeY) this.y += this.offsets.y;
-        if (!freezeX && this.game.player.isFreeze.x) this.x += -this.offsets.x;
+        if (!freezeX && this.game.player.isFreeze.x) this.x += -this.offsets.x
     }
 }
 
@@ -56,7 +56,7 @@ class MushroomSpawner extends Brick {
 
     update(freezeX = false, freezeY = true) {
         this.collisions.isBottom((collisionElem) => {
-            if (collisionElem().classList.some((className) => ['player'].includes(className))) {
+            if (collisionElem().classList.some((className) => className === 'player')) {
                 this.spawn()
             }
         })

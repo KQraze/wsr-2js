@@ -7,7 +7,8 @@ class Drawable {
         this.w = 0;
         this.offsets = {
             x: 0,
-            y: 0
+            y: 0,
+            xFromEnvironment: 0,
         }
         this.createElement();
     }

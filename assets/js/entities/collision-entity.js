@@ -32,7 +32,13 @@ class CollisionEntity extends Drawable {
     }
 
     isCollisionWithCallback(direction = 'bottom', callbackFn = () => undefined) {
-        let types = new Map([['bottom', 'isBottom'], ['top', 'isTop'], ['left', 'isLeft'], ['right', 'isRight'], ['inside', 'isInside']])
+        let types = new Map([
+            ['bottom', 'isBottom'],
+            ['top', 'isTop'],
+            ['left', 'isLeft'],
+            ['right', 'isRight'],
+            ['inside', 'isInside']
+        ])
 
         let elementCollision = this.collisions[direction].find((collision) => collision()[types.get(direction)]) ?? undefined;
 
