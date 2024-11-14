@@ -29,6 +29,13 @@ class Mushroom extends Environment {
         }
     }
 
+    eatMushroom() {
+        this.game.points += 150;
+        this.game.hp += 4;
+        this.removeElement()
+        clearInterval(this.interval)
+    }
+
     update(freezeX = false, freezeY = false) {
         this.onFalling();
 
@@ -37,8 +44,7 @@ class Mushroom extends Environment {
             const { top } = collisionEl();
 
             if (collisionEl().classList.includes('player')) {
-                this.removeElement()
-                clearInterval(this.interval)
+                this.eatMushroom()
             }
 
             if (this.offsets.y > 0) {
@@ -49,8 +55,7 @@ class Mushroom extends Environment {
 
         this.collisions.isBottom((collisionEl) => {
             if (collisionEl().classList.includes('player')) {
-                this.removeElement()
-                clearInterval(this.interval)
+                this.eatMushroom()
             }
         })
 

@@ -20,6 +20,11 @@
     animation: mushroom-spawned 1s forwards;
 }
 
+.element.castle {
+    background: url("../img/castle.png");
+    background-size: contain;
+}
+
 @keyframes mushroom-spawned {
     0% {
         transform: scale(0.5);

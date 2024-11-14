@@ -87,6 +87,9 @@ body {
     position: absolute;
 }
 
+.text-stroke {
+    -webkit-text-stroke: 2px #232323;
+}
 
 .footer {
     height: 145px;

@@ -64,3 +64,28 @@ class MushroomSpawner extends Brick {
         super.update(freezeX, freezeY);
     }
 }
+
+class Castle extends Environment {
+    constructor(game, { x }) {
+        super(game);
+        this.w = 320;
+        this.h = 376;
+        this.y = gameConfig.BOTTOM_POINT - this.h - 18;
+        this.x = x;
+        this.bindCollisions('.player')
+    }
+
+    finish() {
+        this.game.end(true);
+    }
+
+    update(freezeX = false, freezeY = true) {
+        this.collisions.isInside((collisionElem) => {
+            if (collisionElem().classList.some((className) => className === 'player')) {
+                this.finish();
+            }
+        })
+
+        super.update(freezeX, freezeY);
+    }
+}

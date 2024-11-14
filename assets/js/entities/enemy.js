@@ -10,6 +10,7 @@ class Enemy extends Environment {
         this.inFall = false;
         this.interval = setInterval(() => this.rotateEnemy(), 3000)
         this.bindCollisions('.player')
+        this.bindCollisions('.element.castle')
     }
 
     resetFall() {
@@ -31,7 +32,15 @@ class Enemy extends Environment {
         }
     }
 
+    takeDamage() {
+        this.game.hp -= 4;
+        this.game.player.inJump = true;
+        this.game.player.onJump();
+        this.rotateEnemy()
+    }
+
     kill() {
+        this.game.points += 200;
         this.dropCollisions();
         clearInterval(this.interval);
         this.element.classList.add('_killed')
@@ -43,6 +52,10 @@ class Enemy extends Environment {
 
         this.collisions.isInside((collisionEl) => {
             const { top } = collisionEl();
+
+            if (collisionEl().classList.includes('castle')) {
+                this.xFromEnvironment = -this.xFromEnvironment
+            }
 
             if (this.offsets.y > 0) {
                 this.y = top - this.h;
@@ -56,26 +69,25 @@ class Enemy extends Environment {
             }
         })
 
-        this.collisions.isBottom((collisionEl) => {
-            if (collisionEl().classList.includes('player')) {
-                // this.removeElement()
-                // clearInterval(this.interval)
-            }
-        })
-
         this.collisions.isLeft((collisionElement) => {
+            console.log(collisionElement().classList);
+            if (collisionElement().classList.includes('castle')) {
+                this.xFromEnvironment = -this.xFromEnvironment
+            }
             if (collisionElement().classList.includes('player')) {
-                this.game.player.inJump = true;
-                this.game.player.onJump();
-                this.rotateEnemy()
+                this.takeDamage();
             }
         })
 
         this.collisions.isRight((collisionElement) => {
+            console.log(collisionElement().classList);
+            if (collisionElement().classList.includes('castle')) {
+                this.xFromEnvironment = -this.xFromEnvironment;
+                console.log('collision')
+
+            }
             if (collisionElement().classList.includes('player')) {
-                this.game.player.inJump = true;
-                this.game.player.onJump();
-                this.rotateEnemy()
+                this.takeDamage();
             }
         })
 

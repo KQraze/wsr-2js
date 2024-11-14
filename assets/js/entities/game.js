@@ -4,7 +4,13 @@ class Game {
         this.chunkW = 70;
         this.startGamePos = 600;
         this.elements = [];
+        this.points = 0;
+        this.hp = 20;
         this.player = this.generate(this.user.character === 'mario' ? Mario : Luigi);
+        this.frames = 0;
+        this.timer = 0;
+        this.ended = false;
+        this.setTimer();
         this.generateEnvironment();
     }
 
@@ -14,14 +20,33 @@ class Game {
 
     loop() {
         requestAnimationFrame(() => {
+            if (this.ended) return;
+            this.frames++;
+            if (this.frames % getFps() === 0 && this.player.isFreeze.x) {
+                this.timer++
+                this.setTimer();
+            }
+
+            if (this.hp <= 0) {
+                this.end()
+            }
+
             this.updateElements();
+            this.setParams();
             this.loop();
         })
     }
 
+    setTimer() {
+        const minutes = Math.trunc(this.timer / 60);
+        const seconds = this.timer % 60;
+        $(`#time`).innerHTML = `${minutes}`.padStart(2, '0') + ':' + `${seconds}`.padStart(2, '0')
+        $(`#end-time`).innerHTML = `${minutes}`.padStart(2, '0') + ':' + `${seconds}`.padStart(2, '0')
+    }
+
     generateEnvironment() {
         this.background = this.generate(Background);
-        this.generateElementsByChunk(MushroomSpawner, '.element.mushroomspawner', 5, 34, 58, 88)
+        this.generateElementsByChunk(MushroomSpawner, '.element.mushroomspawner', 5, 34, 58, 88);
         this.generateElementsByChunk(Brick, '.element.brick',
             1, 2, 3, 4,
             6,
@@ -34,8 +59,9 @@ class Game {
             77,
             86, 87, 89,
             102, 103, 104
-        )
-        this.generateElementsByChunk(Enemy, null, 10, 24, 46, 68, 83, 108)
+        );
+        this.generateElementsByChunk(Castle, null, 118);
+        this.generateElementsByChunk(Enemy, null, 10, 24, 46, 68, 83, 108);
     }
 
     generateElementsByChunk(className, collisionSelector, ...chunkNumbers) {
@@ -66,5 +92,25 @@ class Game {
             element.update();
             element.draw();
         })
+    }
+
+    setParams() {
+        let params = ['name', 'points', 'hp']
+        let values = [this.user.name, this.points, this.hp];
+
+        params.forEach((param, index) => $(`#${param}`).innerHTML = values[index])
+    }
+
+    end(fromFinish = false) {
+        this.ended = true;
+        if (fromFinish) {
+            $('#end-title').innerHTML = 'WON';
+            $('#end-title').className = 'text-success'
+        } else {
+            $('#end-title').innerHTML = 'LOSE';
+            $('#end-title').className = 'text-danger'
+        }
+        $('#end-score').innerHTML = this.points;
+        go('end');
     }
 }

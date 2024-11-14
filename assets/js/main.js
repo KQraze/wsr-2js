@@ -20,6 +20,10 @@ const go = (page) => {
     $(`#${currentView}`).classList.remove('d-none');
     $(`#${currentView}`).classList.add('d-flex');
 
+    if (currentView === 'game') {
+        $all('.element').forEach((elem) => elem.remove());
+    }
+
     views.forEach((view) => {
         if (view !== currentView) {
             $(`#${view}`).classList.remove('d-flex');
@@ -32,6 +36,7 @@ const actionsOnClick = () => {
     document.onclick = (e) => {
         e.preventDefault();
         switch (e.target.id) {
+            case 'reset-btn':
             case 'startGame': go('game');
         }
     }
@@ -85,5 +90,5 @@ window.onload = () => {
             game.start();
             currentView = 'game process'
         }
-    }, 500)
+    }, 100)
 }
