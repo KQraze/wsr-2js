@@ -1,10 +1,10 @@
 class Mushroom extends Environment {
     constructor(game, { x, y }) {
         super(game);
-        this.h = 50;
-        this.w = 50;
+        this.h = 75;
+        this.w = 75;
         this.x = x + this.w / 2;
-        this.y = y - this.h;
+        this.y = y - this.h - 10;
         this.offsets.y = 0;
         this.xFromEnvironment = -this.speedPerFrame / 4;
         this.inFall = false;

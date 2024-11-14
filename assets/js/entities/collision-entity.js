@@ -58,6 +58,14 @@ class CollisionEntity extends Drawable {
         })
     }
 
+    dropCollisions() {
+        this.collisions.bottom = [];
+        this.collisions.left = [];
+        this.collisions.inside = [];
+        this.collisions.right = [];
+        this.collisions.top = [];
+    }
+
     isCollision(element) {
         const COLLISION_STEP = this.speedPerFrame * 2;
 

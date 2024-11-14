@@ -2,7 +2,7 @@ class Game {
     constructor(user) {
         this.user = user;
         this.chunkW = 70;
-        this.startGamePos = 500;
+        this.startGamePos = 600;
         this.elements = [];
         this.player = this.generate(this.user.character === 'mario' ? Mario : Luigi);
         this.generateEnvironment();
@@ -35,7 +35,7 @@ class Game {
             86, 87, 89,
             102, 103, 104
         )
-        this.generateElementsByChunk(Enemy, '.element.enemy', 10, 24, 46, 68, 83, 108)
+        this.generateElementsByChunk(Enemy, null, 10, 24, 46, 68, 83, 108)
     }
 
     generateElementsByChunk(className, collisionSelector, ...chunkNumbers) {

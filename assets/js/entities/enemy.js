@@ -31,16 +31,18 @@ class Enemy extends Environment {
         }
     }
 
+    kill() {
+        this.dropCollisions();
+        clearInterval(this.interval);
+        this.element.classList.add('_killed')
+        setTimeout(() => this.removeElement(),1000)
+    }
+
     update(freezeX = false, freezeY = false) {
         this.onFalling();
 
         this.collisions.isInside((collisionEl) => {
             const { top } = collisionEl();
-
-            if (collisionEl().classList.includes('player')) {
-                this.removeElement()
-                clearInterval(this.interval)
-            }
 
             if (this.offsets.y > 0) {
                 this.y = top - this.h;
@@ -50,28 +52,29 @@ class Enemy extends Environment {
 
         this.collisions.isTop((collisionEl) => {
             if (collisionEl().classList.includes('player')) {
-                this.element.classList.add('_killed')
-                setTimeout(() => this.removeElement(),3000)
+                this.kill();
             }
         })
 
         this.collisions.isBottom((collisionEl) => {
             if (collisionEl().classList.includes('player')) {
-                this.removeElement()
-                clearInterval(this.interval)
+                // this.removeElement()
+                // clearInterval(this.interval)
             }
         })
 
         this.collisions.isLeft((collisionElement) => {
-            console.debug(collisionElement())
             if (collisionElement().classList.includes('player')) {
+                this.game.player.inJump = true;
+                this.game.player.onJump();
                 this.rotateEnemy()
-
             }
         })
 
         this.collisions.isRight((collisionElement) => {
             if (collisionElement().classList.includes('player')) {
+                this.game.player.inJump = true;
+                this.game.player.onJump();
                 this.rotateEnemy()
             }
         })
