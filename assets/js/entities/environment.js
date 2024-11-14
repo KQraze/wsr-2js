@@ -33,10 +33,10 @@ class Background extends Environment {
 class Brick extends Environment {
     constructor(game, { x }) {
         super(game);
-        this.x = x || 500;
+        this.x = x || this.chunkW;
         this.y = gameConfig.BOTTOM_POINT - 280;
-        this.w = 70;
-        this.h = 70;
+        this.w = this.chunkW;
+        this.h = this.chunkW;
     }
 }
 

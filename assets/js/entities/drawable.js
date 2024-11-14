@@ -5,6 +5,7 @@ class Drawable {
         this.y = 0;
         this.h = 0;
         this.w = 0;
+        this.chunkW = 70;
         this.offsets = {
             x: 0,
             y: 0,

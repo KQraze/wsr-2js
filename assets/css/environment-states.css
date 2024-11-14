@@ -15,7 +15,41 @@
 }
 
 .element.mushroom {
-    background: black;
+    background: url("../img/mushroom.png");
+    background-size: contain;
+}
+
+.element.enemy {
+    animation: enemy-goes .3s infinite;
+}
+
+.element.enemy._go-right {
+    animation: enemy-goes .3s infinite;
+    transform: scaleX(-1);
+}
+
+.element.enemy._killed {
+    animation: kill forwards 1s;
+}
+
+@keyframes kill {
+    0% {
+        translate: 0 0;
+    }
+    100% {
+        translate: 0 200%;
+    }
+}
+
+@keyframes enemy-goes {
+    0%, 100% {
+        background: url("../img/enemy/enemy-go-1.png") center no-repeat;
+        background-size: contain;
+    }
+    50% {
+        background: url("../img/enemy/enemy-go-2.png") center no-repeat;
+        background-size: contain;
+    }
 }
 
 @keyframes spawn {
